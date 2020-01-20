@@ -1,0 +1,4 @@
+[DEFAULT]
+VOCAB=/home/alberto/Projects/QuantiQual/postproc_tesseract2/resources/words.txt
+AMBIG_CHARS=/home/alberto/Projects/QuantiQual/postproc_tesseract2/resources/ambig_chars
+LM=/home/alberto/Projects/QuantiQual/postproc_tesseract/LM.en
