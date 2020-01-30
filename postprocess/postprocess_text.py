@@ -6,6 +6,7 @@ import ConfigParser
 
 
 
+import io
 
 
 
@@ -21,7 +22,7 @@ replacement_dict_path = sys.argv[2]
 
 
 
-with open(input_data) as finp:
+with io.open(input_data,"r", encoding="utf-8") as finp:
     data = finp.readlines()
 
 
@@ -41,8 +42,8 @@ LMmodel = kenlm.Model(language_model_path)
 
 
 ##Get replacement dict
-with open(replacement_dict_path) as fin:
-    alternative_dict_text = fin.readlines()
+with io.open(replacement_dict_path,"r", encoding="utf-8") as frep:
+    alternative_dict_text = frep.readlines()
 
 
 alternative_elems=[x.strip().split("->") for x in alternative_dict_text]
@@ -120,13 +121,19 @@ def postproc_sentence(s):
 
 
 
+
 #Print postprocessed sentence (and the dictionaries of replacements done)
 def format_replacements_list(replac_list):
-	return "; ".join([str(x[0])+"->"+str(x[1]) for x in replac_list if len(x)>0] )
+	replac_list_out=[]
+	for x in replac_list:
+		if len(x)>0:
+			replac_list_out.append(x[0]+"->"+x[1])
+	return "; ".join(replac_list_out)
 
 
 for s in data:
 	post_sent , replac = postproc_sentence(s)
-	print(post_sent+"\t"+format_replacements_list(replac))
+	replac_str=format_replacements_list(replac)
+	print( (post_sent+"\t"+replac_str).encode("UTF8") )
 
 

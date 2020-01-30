@@ -46,7 +46,7 @@ choices= set(wordlist_tr + words.words() + list(string.punctuation))
 #Get ambig characters
 with open(ambig_chars_file) as famb:
     ambi_chars_file = famb.readlines()
-ambig_chars=dict([x.decode('utf-8').strip().split("\t") for x in ambi_chars_file])
+ambig_chars=dict([x.strip().split("\t") for x in ambi_chars_file])
 
 
 
@@ -116,7 +116,8 @@ vocab = set(flatten([nltk.word_tokenize(s.decode('utf-8').lower()) for s in data
 for w in vocab:
 	altern=list(get_altern(w))
 	if len(altern)>0:
-		output_str = w+"->"+str(altern)
-		print(output_str.encode('utf-8'))
+		altern_utf8 = [x.encode("'utf-8") for x in altern]
+		output_str = w.encode("'utf-8")+"->"+str(altern_utf8)
+		print(output_str)
 
 

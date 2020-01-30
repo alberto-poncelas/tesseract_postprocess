@@ -30,11 +30,11 @@ cp aleph.gutenberg.org/*/*/*/*/*/*.zip zips
 rm -r www.gutenberg.org
 rm -r aleph.gutenberg.org
 cd zips
+mkdir books
 
 files=$(ls *zip)
 for z in $files; do 
-    echo $z
-    unzip -f $z
+    unzip $z -d books
 done
 cd ..
 ```
@@ -46,7 +46,7 @@ Combine all the files extracted and preprocess:
 
 In order to do that we execute the following command:
 ```
-cat zips/*.txt   \
+cat zips/books/*.txt   \
  | sed 's/  */ /g' \
  | awk -F"\t" '{ if (length($0)>1) {print tolower($0)} }' \
  | awk '{print gensub(/\y[[:punct:]]/," \\0 ","g")}' > books.tok.txt
